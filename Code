@@ -4,9 +4,11 @@
  #include <avr/interrupt.h> // needed for the additional interrupt
  #define DIGITAL_WRITE_HIGH(PORT) PORTB |= (1 << PORT)
  #define DIGITAL_WRITE_LOW(PORT) PORTB &= ~(1 << PORT)
+
  // Routines to set and clear bits (used in the sleep code)
  #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
  #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
+
  // Defines for OLED output
  #define SSD1306XLED_H
  #define SSD1306_SCL PORTB4 // SCL, Pin 4 on SSD1306 Board- for webbogles
@@ -14,6 +16,7 @@
  #define SSD1306_SDA PORTB3 // SDA, Pin 3 on SSD1306 Board- for webbogles
  board
  #define SSD1306_SA 0x78 // Slave address
+
  // Function prototypes
  void resetAliens(void);
  void drawPlatform(void);
@@ -69,6 +72,7 @@
  boolean newHigh = 0;
  int score = 0; // score- this affects the difficulty of the game
  int top = 0;
+
  // Interrupt handlers
  ISR(PCINT0_vect){ // PB0 pin button interrupt
  if (digitalRead(2)==1) fire = 1;
@@ -76,6 +80,7 @@
  void playerIncSpaceAttack(){ // PB2 pin button interrupt
  if (digitalRead(0)==1) fire = 1;
  }
+
  // Arduino stuff- setup
  void setup() {
  DDRB=0b00000010; // set PB1 as output (for the speaker)
@@ -84,6 +89,7 @@
  sei();
  // enable all interrupts
  }
+
  // Arduino stuff- loop
  void loop() {
  ssd1306_init();
